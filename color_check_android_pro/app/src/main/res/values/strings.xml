@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ColorCheck Pro</string>
+    <string name="btn_camera">Camera</string>
+    <string name="btn_gallery">Gallery</string>
+    <string name="btn_advanced">Advanced</string>
+    <string name="btn_calibrate">Calibrate</string>
+    <string name="btn_lasso">Free region</string>
+    <string name="btn_reset">Reset</string>
+</resources>
