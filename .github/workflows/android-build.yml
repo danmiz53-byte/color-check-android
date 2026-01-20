@@ -13,8 +13,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # JDK 17 (מתאים ל-Android SDK tools + Gradle מודרני)
-      - name: Set up JDK 17
+      # JDK 17 for Android sdkmanager/cmdline-tools
+      - name: Set up JDK 17 (for Android SDK tools)
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -23,15 +23,25 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      # מתקין Gradle 8.7 בלי להסתמך על wrapper
-      - name: Set up Gradle 8.7
-        uses: gradle/actions/setup-gradle@v3
+      # Switch to JDK 8 for old Gradle wrapper (your wrapper downloads Gradle 4.4.1)
+      - name: Set up JDK 8 (for Gradle 4.4.1)
+        uses: actions/setup-java@v4
         with:
-          gradle-version: "8.7"
+          distribution: temurin
+          java-version: "8"
+
+      - name: Unzip project
+        run: |
+          ls -la
+          unzip -o color_check_android_pro_mvp-1.zip
+          ls -la
+          ls -la color_check_android_pro
 
       - name: Build Debug APK
         working-directory: color_check_android_pro
-        run: gradle :app:assembleDebug
+        run: |
+          chmod +x ./gradlew
+          ./gradlew :app:assembleDebug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
